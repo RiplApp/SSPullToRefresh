@@ -151,7 +151,7 @@
     
     UIEdgeInsets inset = self.scrollView.contentInset;
     if (@available(iOS 11.0, *)) {
-        inset.top = 60;
+        inset.top = [ self getTopOffset ];
     } else {
         inset = self.scrollView.contentInset;
     }
@@ -160,7 +160,6 @@
 
 	self.contentView.frame = contentFrame;
 }
-
 
 #pragma mark - Initializer
 
@@ -180,6 +179,7 @@
 		self.state = SSPullToRefreshViewStateNormal;
 		self.expandedHeight = 70.0f;
 		self.defaultContentInset = scrollView.contentInset;
+		self.myTopOffset = 0;
 
 		// Add to scroll view
 		[self.scrollView addSubview:self];
@@ -195,6 +195,15 @@
 	return self;
 }
 
+-(void) setTopOffset:(CGFloat) aTopOffset
+{
+	self.myTopOffset = aTopOffset;
+}
+
+-(CGFloat) getTopOffset
+{
+	return self.myTopOffset;
+}
 
 #pragma mark - Loading
 
