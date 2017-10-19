@@ -148,6 +148,15 @@
 			contentFrame.origin.y = size.height + self.defaultContentInset.top + self.scrollView.contentOffset.y;
 			break;
 	}
+    
+    UIEdgeInsets inset = self.scrollView.contentInset;
+    if (@available(iOS 11.0, *)) {
+        inset.top = 60;
+    } else {
+        inset = self.scrollView.contentInset;
+    }
+    
+    self.defaultContentInset = inset;
 
 	self.contentView.frame = contentFrame;
 }
@@ -178,6 +187,10 @@
 		// Semaphore is used to ensure only one animation plays at a time
 		_animationSemaphore = dispatch_semaphore_create(0);
 		dispatch_semaphore_signal(_animationSemaphore);
+        
+        if (@available(iOS 11.0, *)) {
+            self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
 	}
 	return self;
 }
